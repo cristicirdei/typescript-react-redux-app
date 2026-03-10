@@ -1,0 +1,138 @@
+/*$dark-gray: #1a1d24;
+$black: #0b0d13;
+$white: #fff;
+$gray: #eaedf3;
+$lime: #c5ff20;*/
+@import '../../../styles/Master.scss';
+
+.page {
+    height: 100%;
+    width: calc(100% - 15rem);
+    position: absolute;
+    top: 0;
+    background-color: $gray;
+    padding: 1rem;
+}
+
+.container {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 20px;
+}
+
+.searchContainer:has(.card) {
+    margin-top: 20px;
+    margin-bottom: 3rem;
+    padding-bottom: 1rem;
+    border-bottom: 1.5px solid #cecece;
+}
+
+.searchContainer {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 20px;
+    margin-bottom: 1rem;
+
+
+    .card {
+        flex-direction: row;
+        gap: 20px;
+        padding: 10px;
+
+        img {
+            height: 1.5rem;
+        }
+
+        h2 {
+            margin: 0;
+            font-size: 16px;
+            height: 1rem;
+        }
+
+        p {
+            display: none;
+        }
+    }
+}
+
+.card {
+    display: flex;
+    flex-direction: column;
+    width: 16rem;
+    padding: 20px;
+    border-radius: 1rem;
+
+    background: $white;
+    box-shadow: 0px 0px 15px $gray;
+    color: $dark-gray;
+
+    text-align: center;
+
+    img {
+        height: 2.5rem;
+        margin-bottom: 10px;
+        mix-blend-mode: multiply;
+        align-self: start;
+    }
+
+    div {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+        align-items: start;
+
+    }
+
+    h2 {
+        margin: 0;
+        font-size: 18px;
+        height: 1rem;
+    }
+
+    p {
+        margin: 0;
+        font-size: small;
+    }
+}
+
+.card:hover {
+    box-shadow: 0 0 0 2px $lime inset;
+    cursor: pointer;
+}
+
+.leagueDetailPage {
+    padding: 2rem;
+    display: flex;
+    flex-direction: row;
+    gap: 3rem;
+
+    img {
+        height: 5rem;
+        mix-blend-mode: multiply;
+    }
+
+    .country {
+        height: 16px;
+        width: 16px;
+        border-radius: 5px;
+        object-fit: cover;
+        margin-left: 5px;
+    }
+
+    .details {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+        padding-top: 3.5rem;
+
+        h2 {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin: 0;
+        }
+    }
+
+}
