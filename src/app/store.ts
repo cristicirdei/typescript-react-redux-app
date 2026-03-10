@@ -1,11 +1,13 @@
 import { configureStore } from "@reduxjs/toolkit"
-import postsReducer from "../features/posts/postsSlice"
-import leaguesReducer from "../features/leagues/leaguesSlice"   
+import leaguesReducer from "../features/leagues/leaguesSlice"
+import teamsReducer from "../features/teams/teamsSlice"   
+import playersReducer from "../features/players/playersSlice"   
 
 export const store = configureStore({
   reducer: {
-    posts: postsReducer,
     leagues: leaguesReducer,
+    teams: teamsReducer,
+    players: playersReducer,
   },
 })
 
