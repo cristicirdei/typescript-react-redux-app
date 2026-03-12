@@ -1,85 +1,99 @@
-import React, { useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import React, { useMemo } from "react";
 import { useParams } from "react-router-dom";
-import { AppDispatch, RootState } from "../../../app/store";
-import { fetchLeagueById } from "../leaguesSlice";
-import { fetchTeamsByLeagueSeason } from "../../teams/teamsSlice";
-import TeamCard from "../../teams/components/TeamCard";
+import {
+  useGetLeagueByIdQuery,
+  useGetTeamsByLeagueSeasonQuery,
+} from "../../../app/api";
+import { useLogQuery } from "../../../app/debug";
 import { Team } from "../../../types/team";
 import styles from "../styles/League.module.scss";
-import { current } from "@reduxjs/toolkit";
+import TeamLogoLink from "../../teams/components/TeamLogoLink";
 
 const LeagueDetailPage: React.FC = () => {
   const { id } = useParams<{ id: string }>();
+  const leagueId = id ? parseInt(id) : undefined;
 
-  const dispatch = useDispatch<AppDispatch>();
-  const { selectedLeague, loading, error } = useSelector(
-    (state: RootState) => state.leagues,
+  const leagueResult = useGetLeagueByIdQuery(leagueId!, {
+    skip: leagueId === undefined,
+  });
+  const { data: selectedLeague, isLoading: loading, error } = leagueResult;
+  useLogQuery(leagueResult, `getLeagueById(${leagueId})`);
+
+  const currentSeason = useMemo(() => {
+    if (!selectedLeague) return undefined;
+    console.log(
+      "Selected League Season:",
+      selectedLeague.seasons[selectedLeague.seasons.length - 2]?.year,
+    );
+    return (
+      //selectedLeague.seasons.find((s) => s.current)?.year ||
+      selectedLeague.seasons[selectedLeague.seasons.length - 2]?.year
+    );
+  }, [selectedLeague]);
+
+  const teamsResult = useGetTeamsByLeagueSeasonQuery(
+    { leagueId: leagueId!, season: currentSeason! },
+    { skip: leagueId === undefined || currentSeason === undefined },
   );
-  const { teams } = useSelector((state: RootState) => state.teams);
+  const {
+    data: teams,
+    isLoading: teamsLoading,
+    error: teamsError,
+  } = teamsResult;
+  useLogQuery(
+    teamsResult,
+    `getTeamsByLeagueSeason(${leagueId},${currentSeason})`,
+  );
 
-  useEffect(() => {
-    if (id) {
-      dispatch(fetchLeagueById(parseInt(id)));
-    }
-  }, [dispatch, id]);
-
-  // when league loads, fetch teams for its current season
-  useEffect(() => {
-    if (selectedLeague) {
-      console.log("leagueId:", selectedLeague.league.id);
-
-      const currentSeason =
-        selectedLeague.seasons.find((s) => s.current)?.year ||
-        selectedLeague.seasons[0]?.year;
-
-      console.log("current season:", currentSeason);
-      if (currentSeason) {
-        dispatch(
-          fetchTeamsByLeagueSeason({
-            leagueId: selectedLeague.league.id,
-            season: currentSeason,
-          }),
-        );
-      }
-    }
-  }, [dispatch, selectedLeague]);
-
-  if (loading) return <div>Loading...</div>;
-  if (error) return <div>Error: {error}</div>;
+  if (loading || teamsLoading) return <div>Loading...</div>;
+  if (error || teamsError)
+    return (
+      <div>Error: {((error || teamsError) as any).error || "unknown"}</div>
+    );
 
   console.log("Selected League:", selectedLeague);
   console.log("Teams for League:", teams);
 
+  // component
   return (
     <div className={`${styles.page} ${styles.leagueDetailPage}`}>
       {selectedLeague?.league.logo && (
-        <img
-          src={selectedLeague.league.logo}
-          alt={selectedLeague.league.name}
-        />
+        <div className={styles.leagueLogo}>
+          <img
+            src={selectedLeague.league.logo}
+            alt={selectedLeague.league.name}
+          />
+        </div>
       )}
 
       <div className={styles.details}>
-        <h2>
-          {selectedLeague?.league.name}{" "}
-          <span>
-            {selectedLeague?.country.flag && (
-              <img
-                className={styles.country}
-                src={selectedLeague.country.flag}
-                alt={selectedLeague.country.name}
-              />
-            )}
-          </span>
-        </h2>
-      </div>
+        <div className={styles.header}>
+          <h2>
+            {selectedLeague?.league.name}{" "}
+            <span>
+              {selectedLeague?.country.flag && (
+                <img
+                  className={styles.country}
+                  src={selectedLeague.country.flag}
+                  alt={selectedLeague.country.name}
+                />
+              )}
+            </span>
+          </h2>
 
-      {/* list teams for the league */}
-      <div className={styles.container}>
-        {teams.map((team: Team) => (
-          <TeamCard key={team.team.id} team={team} />
-        ))}
+          <div className={styles.seasons}>
+            {selectedLeague?.seasons.map((season: any) => (
+              <div>{season.year}</div>
+            ))}
+          </div>
+        </div>
+
+        {/* list teams for the league */}
+        <div className={styles.container}>
+          {teams?.map((team: Team) => (
+            <TeamLogoLink key={team.team.id} team={team} />
+          ))}
+        </div>
       </div>
     </div>
   );

@@ -3,3 +3,92 @@ $black: #0b0d13;
 $white: #fff;
 $gray: #eaedf3;
 $lime: #c5ff20;
+$blue: #0067FF;
+
+* {
+    font-family: Arial, Helvetica, sans-serif;
+    color: $gray;
+    box-sizing: border-box;
+}
+
+.page {
+    min-height: 100vh;
+    background-color: $black;
+    padding: 1rem 2rem;
+
+    .title {
+        width: 100%;
+        align-items: end;
+        display: flex;
+        justify-content: space-between;
+
+        input {
+            width: 20rem;
+        }
+    }
+}
+
+
+.searchContainer {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 1rem;
+    width: 22rem;
+    position: absolute;
+    right: 0rem;
+    top: 9rem;
+    padding-right: 3rem;
+
+    max-height: 90vh;
+    overflow-y: scroll;
+
+    .card {
+        display: flex;
+        flex-direction: row;
+        gap: 20px;
+        padding: 10px;
+        width: calc(20rem - 4px);
+        height: max-content;
+        border: none;
+        border-bottom: 2px solid $black;
+        background-color: $dark-gray;
+
+        align-items: start;
+        justify-content: start;
+
+        div {
+            margin: 0;
+            gap: 0;
+        }
+
+        img {
+            height: 1.5rem;
+        }
+
+        h2 {
+            margin: 0;
+            font-size: 14px;
+        }
+
+        p {
+            display: none;
+        }
+
+        h5 {
+            margin: 0;
+            font-weight: normal;
+        }
+    }
+
+    .card:hover {
+        background-color: $lime;
+        color: $dark-gray;
+        cursor: pointer;
+
+        h2,
+        p,
+        h5 {
+            color: $dark-gray;
+        }
+    }
+}

@@ -7,18 +7,16 @@ interface Props {
   team: Team;
 }
 
-const TeamCard: React.FC<Props> = ({ team }) => (
+const TeamLogoLink: React.FC<Props> = ({ team }) => (
   <Link
     to={`/teams/${team.team.id}`}
     style={{ textDecoration: "none", color: "inherit" }}>
-    <div className={styles.card}>
-      {team.team.logo && <img src={team.team.logo} alt={team.team.name} />}
-      <div>
-        <h2>{team.team.name}</h2>
-        {team.team.country && <h5>{team.team.country}</h5>}
+    {team.team.logo && (
+      <div className={styles.logoOnly}>
+        <img src={team.team.logo} alt={team.team.name} />
       </div>
-    </div>
+    )}
   </Link>
 );
 
-export default TeamCard;
+export default TeamLogoLink;

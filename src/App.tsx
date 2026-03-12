@@ -9,20 +9,20 @@ import PlayerDetailPage from "./features/players/pages/PlayerDetailPage";
 
 import "./App.css";
 import Layout from "./Layout";
+import Header from "./components/Menu/Header";
 
 function App() {
   return (
     <BrowserRouter>
+      <Header></Header>
       <Routes>
-        <Route element={<Layout />}>
-          <Route path="/" element={<Navigate to="/leagues" replace />} />
-          <Route path="/leagues" element={<LeaguesPage />} />
-          <Route path="/leagues/:id" element={<LeagueDetailPage />} />
-          <Route path="/teams" element={<TeamsPage />} />
-          <Route path="/teams/:id" element={<TeamDetailPage />} />
-          <Route path="/players" element={<PlayersPage />} />
-          <Route path="/players/:id" element={<PlayerDetailPage />} />
-        </Route>
+        <Route path="/" element={<Navigate to="/leagues" replace />} />
+        <Route path="/leagues" element={<LeaguesPage />} />
+        <Route path="/leagues/:id" element={<LeagueDetailPage />} />
+        <Route path="/teams" element={<TeamsPage />} />
+        <Route path="/teams/:id" element={<TeamDetailPage />} />
+        <Route path="/players" element={<PlayersPage />} />
+        <Route path="/players/:id" element={<PlayerDetailPage />} />
       </Routes>
     </BrowserRouter>
   );

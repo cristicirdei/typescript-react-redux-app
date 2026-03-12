@@ -17,7 +17,7 @@ const LeagueCard: React.FC<Props> = ({ league }) => (
       )}
       <div>
         <h2>{league.league.name}</h2>
-        <p>{league.country.name}</p>
+        <h5>{league.country.name}</h5>
       </div>
     </div>
   </Link>
