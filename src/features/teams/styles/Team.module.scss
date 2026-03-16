@@ -95,6 +95,7 @@
     display: flex;
     flex-direction: row;
     padding: 0;
+    min-width: 100vw;
 
     .teamLogo {
         min-width: 12rem;
@@ -113,6 +114,7 @@
     .details {
         display: flex;
         flex-direction: column;
+        width: 100%;
 
         .header {
             height: 12rem;
@@ -167,7 +169,11 @@ margin-bottom: 10px;
             }
         }
 
-
+.content{
+    display: flex;
+    flex-direction: row;
+     width: 100%;
+}
         .country {
             height: 16px;
             width: 16px;
@@ -177,15 +183,58 @@ margin-bottom: 10px;
         }
 
 
+        .fixturesSection {
+            padding: 0rem;
+            width: 70%;
+            
+             h4,h3{
+        margin: 0;
+        padding: 0.5rem;
+        background-color: $dark-gray;
+        border: 1px solid $black;
+    }
 
-        /* div {
-            width: 100%;
+            .fixturesList {
+                display: flex;
+                flex-wrap: wrap;
+                justify-content: center;
+                gap: 1rem;
+                padding: 0.5rem;
+            }
 
+            .pagination {
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                gap: 1rem;
+                margin-top: 1.5rem;
 
-            gap: 0;
-            display: flex;
-            flex-wrap: wrap;
-        }*/
+                button {
+                    background: $dark-gray;
+                    color: $gray;
+                    border: 1px solid $black;
+                    padding: 0.5rem 1rem;
+                    border-radius: 4px;
+                    cursor: pointer;
+                    transition: background 0.2s;
+
+                    &:hover:not(:disabled) {
+                        background: $lime;
+                        color: $dark-gray;
+                    }
+
+                    &:disabled {
+                        opacity: 0.5;
+                        cursor: not-allowed;
+                    }
+                }
+
+                span {
+                    color: $gray;
+                    font-size: 0.9rem;
+                }
+            }
+        }
     }
 
 }
@@ -193,6 +242,7 @@ margin-bottom: 10px;
 
 .team{
 
+     width: 30%;
     h4,h3{
         margin: 0;
         padding: 0.5rem;

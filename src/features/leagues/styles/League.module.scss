@@ -80,6 +80,7 @@ $lime: #c5ff20;*/
     display: flex;
     flex-direction: row;
     padding: 0;
+    min-width: 100vw;
 
     .leagueLogo {
         min-width: 12rem;
@@ -107,6 +108,7 @@ $lime: #c5ff20;*/
             justify-content: space-between;
             align-items: start;
             margin: 0;
+            width: 100%;
 
             h2 {
                 display: flex;
@@ -143,7 +145,6 @@ $lime: #c5ff20;*/
             }
         }
 
-
         .country {
             height: 16px;
             width: 16px;
@@ -152,16 +153,163 @@ $lime: #c5ff20;*/
             margin-left: 5px;
         }
 
+.content{
+    display: flex;
+    flex-direction: row;
+     width: 100%;
+}
+.standings{
+    width: 60%;
 
+    .standingsSection{
+        width: 100%;
 
-        /* div {
+        .standingsTable{
             width: 100%;
+            border-collapse: collapse;  
+            border: 1px solid $dark-gray;
 
+            thead{
+                background-color: $dark-gray;
+                border: 1px solid $black;
+                
+                th{
+                    padding: 10px;
+                }
+            }
+            tbody{
+                background-color: $dark-gray;
+                border: 1px solid $black;
 
-            gap: 0;
-            display: flex;
-            flex-wrap: wrap;
-        }*/
+                tr{
+                    border: 1px solid $black;
+
+                    td{
+                        border: 1px solid $black;
+                        padding: 5px 10px;
+                        align-items: center;
+                        justify-content: center;
+                        text-align: center;
+                    }
+                }
+            }   
+
+            .teamCol{
+                display: flex;
+                align-items: center;
+                justify-content: left;
+                gap: 10px;
+                border: 0;
+            }
+
+.formItem, .formItemW, .formItemD, .formItemL{
+    width: 1rem;
+    height: 1rem;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.5rem;
+}
+
+            .formItemW{
+                background-color: $lime;
+                color: $dark-gray;
+            }
+            .formItemD{
+                background-color: $gray;
+                color: $dark-gray;
+            }
+            .formItemL{
+                background-color: rgb(160, 0, 0);
+                color: $dark-gray;
+            }
+        }
+    }
+}
+     h4,h3{
+        margin: 0;
+        padding: 0.5rem;
+        background-color: $dark-gray;
+        border: 1px solid $black;
+    }
+
+        .roundsSection {
+            margin-top: 1rem;
+            
+            h3 {
+                color: $gray;
+                margin-bottom: 1rem;
+            }
+
+            .roundsList {
+                display: flex;
+                flex-wrap: wrap;
+                gap: 0.5rem;
+
+                .roundItem {
+                    background: $dark-gray;
+                    color: $gray;
+                    padding: 0.5rem 1rem;
+                    border-radius: 4px;
+                    font-size: 0.9rem;
+                    border: 1px solid $black;
+                }
+            }
+        }
+
+        .fixturesSection {
+            width: 40%;
+            
+               
+             h4,h3{
+        margin: 0;
+        padding: 0.5rem;
+        background-color: $dark-gray;
+        border: 1px solid $black;
+    }
+
+            .fixturesList {
+                display: flex;
+                flex-wrap: wrap;
+                justify-content: center;
+                gap: 1rem;
+                padding: 0.5rem;
+            }
+
+            .pagination {
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                gap: 1rem;
+                margin-top: 1.5rem;
+
+                button {
+                    background: $dark-gray;
+                    color: $gray;
+                    border: 1px solid $black;
+                    padding: 0.5rem 1rem;
+                    border-radius: 4px;
+                    cursor: pointer;
+                    transition: background 0.2s;
+
+                    &:hover:not(:disabled) {
+                        background: $lime;
+                        color: $dark-gray;
+                    }
+
+                    &:disabled {
+                        opacity: 0.5;
+                        cursor: not-allowed;
+                    }
+                }
+
+                span {
+                    color: $gray;
+                    font-size: 0.9rem;
+                }
+            }
+        }
     }
 
 }

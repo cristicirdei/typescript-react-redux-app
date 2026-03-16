@@ -42,3 +42,10 @@ export interface PlayerStatistics {
     player: Player;
     statistics: PlayerStatsEntry[];
 }
+
+export interface PlayerTrophy {
+    league: string;
+    country: string;
+    season: string;
+    place: string;
+}

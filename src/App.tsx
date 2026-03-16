@@ -6,6 +6,7 @@ import TeamsPage from "./features/teams/pages/TeamsPage";
 import TeamDetailPage from "./features/teams/pages/TeamDetailPage";
 import PlayersPage from "./features/players/pages/PlayersPage";
 import PlayerDetailPage from "./features/players/pages/PlayerDetailPage";
+import FixtureDetailPage from "./features/fixtures/pages/FixtureDetailPage";
 
 import "./App.css";
 import Layout from "./Layout";
@@ -23,6 +24,7 @@ function App() {
         <Route path="/teams/:id" element={<TeamDetailPage />} />
         <Route path="/players" element={<PlayersPage />} />
         <Route path="/players/:id" element={<PlayerDetailPage />} />
+        <Route path="/fixtures/:id" element={<FixtureDetailPage />} />
       </Routes>
     </BrowserRouter>
   );

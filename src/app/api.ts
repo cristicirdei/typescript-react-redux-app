@@ -1,7 +1,8 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
-import { League } from '../types/league';
+import { League, Standing } from '../types/league';
 import { Team } from '../types/team';
-import { Player, PlayerStatistics } from '../types/player';
+import { Player, PlayerStatistics, PlayerTrophy } from '../types/player';
+import { Fixture, Lineup } from '../types/fixture';
 
 // grab API key from environment and define base URL for requests
 const API_KEY = process.env.REACT_APP_API_FOOTBALL_KEY;
@@ -91,7 +92,7 @@ export const footballApi = createApi({
     }),
     // get roster of players for a team 
     getPlayersByTeam: builder.query<PlayerStatistics[], { teamId: number }>({
-      query: ({ teamId}) => ({ url: '/players/squads', params: { team: teamId } }),
+      query: ({ teamId }) => ({ url: '/players/squads', params: { team: teamId } }),
       transformResponse: (res: any) => {
         // API sends back an array where the first element contains the team and its players
         return res.response[0]?.players || [];
@@ -119,7 +120,43 @@ export const footballApi = createApi({
         if (season) params.season = season;
         if (teamId) params.team = teamId;
         return { url: '/players/', params };
-      },      transformResponse: (res: any) => res.response[0],    }),
+      }, transformResponse: (res: any) => res.response[0],
+    }),
+    // fetch league standings
+    getStandings: builder.query<Standing[], { leagueId: number; season: number }>({
+      query: ({ leagueId, season }) => ({ url: '/standings', params: { league: leagueId, season } }),
+      transformResponse: (res: any) => res.response[0]?.league?.standings[0] || [],
+    }),
+    // fetch fixtures rounds for a league and season
+    getRounds: builder.query<string[], { leagueId: number; season: number }>({
+      query: ({ leagueId, season }) => ({ url: '/fixtures/rounds', params: { league: leagueId, season } }),
+      transformResponse: (res: any) => res.response,
+    }),
+    // fetch fixtures for a league and season
+    getFixtures: builder.query<Fixture[], { leagueId: number; season: number }>({
+      query: ({ leagueId, season }) => ({ url: '/fixtures', params: { league: leagueId, season } }),
+      transformResponse: (res: any) => res.response,
+    }),
+    // fetch fixtures for a team and season
+    getTeamFixtures: builder.query<Fixture[], { teamId: number; season: number }>({
+      query: ({ teamId, season }) => ({ url: '/fixtures', params: { team: teamId, season } }),
+      transformResponse: (res: any) => res.response,
+    }),
+    // fetch lineups for a fixture
+    getLineups: builder.query<Lineup[], number>({
+      query: (fixtureId) => ({ url: '/fixtures/lineups', params: { fixture: fixtureId } }),
+      transformResponse: (res: any) => res.response,
+    }),
+    // fetch trophies won by a player
+    getPlayerTrophies: builder.query<PlayerTrophy[], number>({
+      query: (playerId) => ({ url: '/trophies', params: { player: playerId } }),
+      transformResponse: (res: any) => res.response,
+    }),
+    // fetch single fixture by ID
+    getFixtureById: builder.query<Fixture, number>({
+      query: (fixtureId) => ({ url: '/fixtures', params: { id: fixtureId } }),
+      transformResponse: (res: any) => res.response[0],
+    }),
   }),
 });
 
@@ -136,4 +173,11 @@ export const {
   useGetPlayerProfileQuery,
   useSearchPlayersQuery,
   useGetPlayerStatsQuery,
+  useGetStandingsQuery,
+  useGetRoundsQuery,
+  useGetFixturesQuery,
+  useGetTeamFixturesQuery,
+  useGetLineupsQuery,
+  useGetPlayerTrophiesQuery,
+  useGetFixtureByIdQuery,
 } = footballApi;

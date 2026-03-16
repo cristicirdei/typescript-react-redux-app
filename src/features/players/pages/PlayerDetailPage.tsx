@@ -4,6 +4,7 @@ import styles from "../styles/Player.module.scss";
 import {
   useGetPlayerProfileQuery,
   useGetPlayerStatsQuery,
+  useGetPlayerTrophiesQuery,
 } from "../../../app/api";
 import { useLogQuery } from "../../../app/debug";
 import PlayerStatistic from "../components/PlayerStatistic";
@@ -29,11 +30,18 @@ const PlayerDetailPage: React.FC = () => {
   } = statsResult;
   useLogQuery(statsResult, `getPlayerStats(${playerId}, season:${2024})`);
 
-  if (loading || statsLoading) return <div>Loading...</div>;
-  if (error || statsError)
+  const trophiesResult = useGetPlayerTrophiesQuery(playerId!, {
+    skip: playerId === undefined,
+  });
+  const { data: trophies, isLoading: trophiesLoading, error: trophiesError } = trophiesResult;
+  useLogQuery(trophiesResult, `getPlayerTrophies(${playerId})`);
+
+  if (loading || statsLoading || trophiesLoading) return <div>Loading...</div>;
+  if (error || statsError || trophiesError)
     return (
-      <div>Error: {((error || statsError) as any).error || "unknown"}</div>
+      <div>Error: {((error || statsError || trophiesError) as any).error || "unknown"}</div>
     );
+
 
   return (
     <div className={`${styles.page} ${styles.playerDetailPage}`}>
@@ -160,6 +168,26 @@ const PlayerDetailPage: React.FC = () => {
                     </tbody>
                   </table>
                 ))*/}
+              </div>
+            )}
+
+            {trophies && trophies.length > 0 && (
+              <div className={styles.trophiesSection}>
+                <h3>Trophies & Honors</h3>
+                <div className={styles.trophiesList}>
+                  {trophies.map((trophy, idx) => (
+                    <div key={idx} className={styles.trophy}>
+                      <div className={styles.trophyInfo}>
+                        <span className={styles.trophyLeague}>{trophy.league}</span>
+                        <span className={styles.trophyPlace}>{trophy.place}</span>
+                      </div>
+                      <div className={styles.trophyDetails}>
+                        <span className={styles.trophyCountry}>{trophy.country}</span>
+                        <span className={styles.trophySeason}>{trophy.season}</span>
+                      </div>
+                    </div>
+                  ))}
+                </div>
               </div>
             )}
           </div>
